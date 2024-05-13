@@ -37,6 +37,35 @@ namespace FastArray {
   		}
   	}
   
+  	void pop_back() {
+  		if (m_size > 0) {
+  			--m_size;
+  
+  			if ((m_capacity / 2) >= m_size) {
+  				m_capacity /= 2;
+  
+  				T* tmp = new T[m_capacity];
+  
+  				for (size_t i = 0; i < m_size; ++i) {
+  					tmp[i] = m_data[i];
+  				}
+  
+  				delete[] m_data;
+  
+  				m_data = tmp;
+  			}
+  		}
+  	}
+  
+  	void clear() {
+  		m_size = 0;
+  		m_capacity = 1;
+  
+  		delete[] m_data;
+  
+  		m_data = nullptr;
+  	}
+  
   	size_t size() {
   		return m_size;
   	}
@@ -44,7 +73,7 @@ namespace FastArray {
   	size_t capacity() {
   		return m_capacity;
   	}
-
+  
   	T& at(size_t index) {
   		return m_data[index % m_size];
   	}
