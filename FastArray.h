@@ -1,4 +1,5 @@
 #pragma once
+#include <initializer_list>
 
 // In Development :)
 namespace FastArray {
@@ -8,6 +9,25 @@ namespace FastArray {
   	size_t m_size, m_capacity;
   public:
   	FastArray() : m_size(0), m_capacity(1) { m_data = nullptr; }
+  	FastArray(const std::initializer_list<T>& list) {
+  		m_size = list.size();
+  		m_capacity = m_size + 1;
+  
+  		m_data = new T[m_capacity];
+  
+  		size_t i = 0;
+  		for (const T& element : list) {
+  			m_data[i] = element;
+  			++i;
+  		}
+  	}
+  	FastArray(const FastArray& other) : m_size(other.m_size), m_capacity(other.m_capacity) {
+  		m_data = new T[m_capacity];
+  		
+  		for (size_t i = 0; i < m_size; ++i) {
+  			m_data[i] = other.m_data[i];
+  		}
+  	}
   	~FastArray() { delete[] m_data; }
   
   	void push_back(const T& elem) {
@@ -98,6 +118,49 @@ namespace FastArray {
   
   	T* data() {
   		return m_data;
+  	}
+  
+  	size_t find(const T& value) {
+  		for (size_t i = 0; i < m_size; ++i) {
+  			if (m_data[i] == value)
+  				return i;
+  		}
+  		return -1;
+  	}
+  
+  	size_t count(const T& value) {
+  		size_t counter = 0;
+  		for (size_t i = 0; i < m_size; ++i) {
+  			if (m_data[i] == value)
+  				++counter;
+  		}
+  		return counter;
+  	}
+  
+  	size_t max() {
+  		if (m_size > 0) {
+  			size_t max_index = 0;
+  			for (size_t i = 1; i < m_size; ++i) {
+  				if (m_data[i] > m_data[max_index]) {
+  					max_index = i;
+  				}
+  			}
+  			return max_index;
+  		}
+  		return -1;
+  	}
+  
+  	size_t min() {
+  		if (m_size > 0) {
+  			size_t min_index = 0;
+  			for (size_t i = 1; i < m_size; ++i) {
+  				if (m_data[i] < m_data[min_index]) {
+  					min_index = i;
+  				}
+  			}
+  			return min_index;
+  		}
+  		return -1;
   	}
   
   	friend std::ostream& operator<<(std::ostream& out, const FastArray& arr) {
