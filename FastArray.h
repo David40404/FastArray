@@ -55,7 +55,7 @@ namespace FastArray {
   				m_data = tmp;
   			}
   		}
-    }
+  	}
   
   	void clear() {
   		m_size = 0;
@@ -70,6 +70,10 @@ namespace FastArray {
   		T tmp = data[index1];
   		data[index1] = data[index2];
   		data[index2] = tmp;
+  	}
+  
+  	T& front() {
+  		return m_data[0];
   	}
   
   	T& back() {
