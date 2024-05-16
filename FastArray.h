@@ -7,7 +7,7 @@ namespace FastArray {
 		T* m_data;
 		size_t m_size, m_capacity;
 	public:
-		FastArray() : m_size(0), m_capacity(1) { m_data = nullptr; }
+		FastArray() : m_size(0), m_capacity(1) { m_data = new T[1]; }
 		FastArray(const std::initializer_list<T>& list) {
 			m_size = list.size();
 			m_capacity = m_size + 1;
@@ -49,6 +49,7 @@ namespace FastArray {
 			}
 			else {
 				m_size = 1;
+				m_capacity = 1;
 				m_data = new T[1];
 				m_data[0] = elem;
 			}
@@ -79,7 +80,7 @@ namespace FastArray {
 
 			delete[] m_data;
 
-			m_data = nullptr;
+			m_data = new T[1];
 		}
 
 		void swap(size_t index1, size_t index2) {
